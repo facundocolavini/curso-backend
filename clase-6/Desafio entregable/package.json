@@ -1,0 +1,19 @@
+{
+  "name": "desafio-entregable",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "moment": "^2.29.1"
+  },
+  "devDependencies": {
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15"
+  },
+  "scripts": {
+    "start": " node server.js",
+    "server": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
