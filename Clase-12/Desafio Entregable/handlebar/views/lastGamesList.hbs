@@ -1,0 +1,39 @@
+<div class="container">
+    <h1>Agregar un juego</h1>
+    <form action="/productos" method="POST">
+        <div class="form-group">
+            <label for="name">Nombre</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Nombre">
+        </div>
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="text" class="form-control" id="price" name="price" placeholder="Precio">
+        </div>
+        <div class="form-group">
+            <label for="price">Imagen</label>
+            <input type="text" class="form-control" id="image" name="image" placeholder="Ingrese una imagen del juego">
+        </div>
+        <button type="submit" class="btn btn-primary mt-4">Agregar</button>
+    </form>
+    <h1>Lista de Juegos</h1>
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Imagen</th>
+            </tr>
+        </thead>
+        <tbody class="list-games">
+{{!--             {{#each games}}
+                <tr>
+                    <td>{{this.name}}</td>
+                    <td>${{this.price}}</td>
+                    <td class="align-middle">
+                        <img class="img-fluid" src={{this.image}} alt={{this.name}}/>
+                    </td>
+                </tr>
+            {{/each}} --}}
+        </tbody>
+    </table>
+</div>
