@@ -3,7 +3,7 @@ const path = require('path');
 const app = express();
 const { engine } = require('express-handlebars');
 const PORT = process.env.PORT || 8080;
-const Games = require('./models/Games');
+const Games = require('./models/model');
 const product = new Games();
 
 app.engine("hbs",

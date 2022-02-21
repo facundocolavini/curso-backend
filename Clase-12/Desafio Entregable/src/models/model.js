@@ -1,9 +1,9 @@
 const path = require('path')
 const fs = require('fs').promises
 
-class Games {
-  constructor() {
-    this.path = path.join(__dirname, '../database/games.json')
+class Model {
+  constructor(pathName) {
+    this.path = path.join(__dirname, pathName)
   }
 
   async getGameById(id) {
@@ -37,4 +37,4 @@ class Games {
   }
 }
 
-module.exports = Games
+module.exports = Model
