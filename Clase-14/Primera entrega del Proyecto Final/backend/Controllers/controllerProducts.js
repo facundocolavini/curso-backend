@@ -1,6 +1,7 @@
-const Model = require('../model');
+const Model = require('../Models/modelProductos');
+const fs = require('fs').promises;
 const path = require('path');
-const model = new Model("./productos.json");
+const model = new Model("./database/products.json");
 
 const getAllProducts = async (req, res) => {
     const {data, error} = await model.getAll()
@@ -14,7 +15,7 @@ const getProductById = async (req, res) => {
 }
 
 const newProduct = async (req, res) => {
-    const addProducto = await model.add(req.body);
+    const addProducto = await model.save(req.body);
     const { data, error } = await addProducto;
     data ? res.send(data) : res.send({error}) ;
 }

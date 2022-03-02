@@ -16,11 +16,21 @@ class Games {
   }
 
   async add(game) {
+    const response = {
+      data:[],
+      error: 'No se pudo guardar el producto'
+  }
     const data = await this.readData()
     const id = data[data.length - 1] ? data[data.length - 1].id : 0
     game.id = id + 1
     data.push(game)
     await this.writeData(data)
+    try{
+      response.data = data;
+    } catch (error){
+      response.error = error;
+    }
+
   }
 
   async getAll() {

@@ -1,6 +1,7 @@
 const http = require('http')
 const path = require('path')
 const express = require('express')
+const cors = require('cors')
 const app = express()
 const server = http.createServer(app)
 const { Server } = require("socket.io");
@@ -14,6 +15,7 @@ const PORT = process.env.PORT || 8080;
 //Middlewares
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cors());
 app.use(express.static('public'))
 
 //Routes
