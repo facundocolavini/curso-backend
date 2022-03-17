@@ -1,0 +1,19 @@
+{
+  "name": "segunda-entrega-final",
+  "version": "1.0.0",
+  "description": "Segunda entrega del proyecto final del curso backend",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "author": "Facundo Colavini",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "express": "^4.17.3",
+    "mongoose": "^6.2.7"
+  }
+}
