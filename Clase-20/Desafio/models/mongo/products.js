@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 class Product {
   constructor() {
     const schema = new mongoose.Schema({
@@ -7,9 +6,9 @@ class Product {
       description: String,
       code: String,
       url: String,
-      price: Number,
+      price: { type: Number },
       stock: { type: Number, default: 0 },
-      timestamp: { type: Number, default: Date.now() },
+      timestamp: { type: Date, default: Date.now(), format: '%Y-%m-%d' },
     });
 
     // Model
@@ -20,6 +19,7 @@ class Product {
     const product = await this.model.create(obj);
     console.log('--------------------');
     console.log(JSON.stringify(product, null, 2));
+
     return product;
   }
 
@@ -35,19 +35,16 @@ class Product {
     }
     console.log(`Productos en DB: ${products.length}`);
 
-    // projections
-    return this.model.find(
-      {},
-      {
-        name: 1,
-        description: 1,
-        code: 1,
-        url: 1,
-        price: 1,
-        stock: 1,
-        timestamp: 1,
-      }
-    );
+    // projections de mongo
+    return await this.model.find(find, {
+      name: 1,
+      description: 1,
+      code: 1,
+      url: 1,
+      price: 1,
+      stock: 1,
+      timestamp: 1,
+    });
   }
 
   async getById(id) {

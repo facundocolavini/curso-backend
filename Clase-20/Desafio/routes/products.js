@@ -1,10 +1,10 @@
-const controller = require('../controllers/mController.products');
+const { mongoProductsController } = require('../controllers');
 const router = require('express').Router();
 
-router.get('/', controller.get); // read
-router.get('/:id', controller.getById); // read by id
-router.post('/', controller.post); // create
-router.put('/:id', controller.put); // update
-router.delete('/:id', controller.delete); // delete
+router.get('/', mongoProductsController.get); // read
+router.get('/:id', mongoProductsController.getById); // read by id
+router.post('/', mongoProductsController.post); // create
+router.put('/:id', mongoProductsController.put); // update
+router.delete('/:id', mongoProductsController.delete); // delete
 
 module.exports = router;

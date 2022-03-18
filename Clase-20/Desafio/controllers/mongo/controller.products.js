@@ -1,10 +1,8 @@
-const productModel = require('../models/mongo/products');
+const productModel = require('../../models/mongo/products');
 
-// handlers de productos o middleware final de productos
 module.exports = {
   get: async (req, res) => {
     const { orderBy, search } = req.query;
-    console.log(orderBy);
     try {
       const products = await productModel.getAll(orderBy, search);
       res.send(products);
