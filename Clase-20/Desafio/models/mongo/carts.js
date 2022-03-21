@@ -1,17 +1,15 @@
+const e = require('express');
 const mongoose = require('mongoose');
+const productsModel = require('./products');
 class Cart {
   constructor() {
     const schema = new mongoose.Schema({
-      products: {
-        type: Array,
-        default: [
-          {
-            quantity: { type: Number, default: 1 },
-            id: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
-          },
-        ],
+      products: { type: Array, default: [] },
+      timestamp: {
+        type: Date,
+        default: Date.now(this.timestamp).toString(),
+        format: '%Y-%m-%d',
       },
-      timestamp: { type: Number, format: '%Y-%m-%d', default: Date.now() },
     });
 
     // Model
@@ -20,10 +18,7 @@ class Cart {
 
   async createCart() {
     //Add a new cart
-    const cart = await this.model.create({
-      products: [],
-      timestamp: Date.now(),
-    });
+    const cart = await this.model.create({});
     console.log('--------------------');
     console.log(JSON.stringify(cart, null, 2));
     return cart;
@@ -78,6 +73,77 @@ class Cart {
   async AllProducts(id) {
     const cart = await this.getById(id);
     return cart.products;
+  }
+
+  async addProductOnCart(id, idProduct) {
+    const cart = await this.getById(id);
+    const product = await productsModel.getById(idProduct);
+    const isInCart = await this.isProductInCart(id, idProduct);
+
+    if (isInCart.length === 0) {
+      const newProduct = {
+        id: idProduct,
+        quantity: 1,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        code: product.code,
+        total: 0,
+        timestamp: product.timestamp,
+      };
+      cart.products.push(newProduct);
+      await this.update(id, cart);
+      return cart;
+    } else {
+      return await this.updateProductOnCart(id, idProduct);
+    }
+  }
+
+  async deleteProductOnCart(id, idProduct) {
+    const cart = await this.getById(id);
+    const isInCart = await this.isProductInCart(id, idProduct);
+    const product = isInCart[0];
+    const checkQuantity = await this.checkQuantityProduct(id, idProduct);
+    if (checkQuantity > 1) {
+      product.quantity = product.quantity - 1;
+      product.total = product.quantity * product.price;
+      cart.products = cart.products.filter((product) => product.id !== idProduct);
+      cart.products.push(product);
+      await this.update(id, cart);
+      return cart;
+    } else {
+      cart.products = cart.products.filter((product) => product.id !== idProduct);
+      await this.update(id, cart);
+      return cart;
+    }
+  }
+
+  async checkQuantityProduct(id, idProduct) {
+    const cart = await this.getById(id);
+    const isInCart = await this.isProductInCart(id, idProduct);
+    const product = isInCart[0];
+    return product.quantity;
+  }
+  async updateProductOnCart(id, idProduct) {
+    const cart = await this.getById(id);
+    const isInCart = await this.isProductInCart(id, idProduct);
+    const product = isInCart[0];
+    product.quantity = product.quantity + 1;
+    product.total = product.quantity * product.price;
+    cart.products = cart.products.filter((product) => product.id !== idProduct);
+    cart.products.push(product);
+    await this.update(id, cart);
+    return cart;
+  }
+  async isProductInCart(id, idProduct) {
+    const products = await this.AllProducts(id);
+    return products.filter((product) => product.id === idProduct);
+  }
+
+  async deleteAllCarts() {
+    await this.model.deleteMany({});
+    console.log('--------------------');
+    console.log('All Carts Deleted');
   }
 }
 

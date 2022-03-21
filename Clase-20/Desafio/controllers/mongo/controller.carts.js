@@ -1,5 +1,4 @@
 const cartsModel = require('../../models/mongo/carts');
-const productsModel = require('../../models/mongo/products');
 
 module.exports = {
   get: async (req, res) => {
@@ -53,7 +52,7 @@ module.exports = {
     try {
       await cartsModel.delete(id);
       res.status(200).send({
-        message: 'Eliminado',
+        message: 'Carrito Eliminado',
       });
     } catch (e) {
       console.log(e);
@@ -65,15 +64,8 @@ module.exports = {
   addProduct: async (req, res) => {
     const { id, id_prod } = req.params;
     try {
-      //verificar si el carrito existe y el producto  esta en la db
-      const cart = await cartsModel.getById(id);
-      const isProdExist = await productsModel.getById(id_prod);
-      const prodArray = cart.products;
-      const isProdInCart = prodArray.findIndex((prod) => prod.id_prod === id_prod);
-      if (isProdInCart) {
-      }
-
-      res.send(isProdInCart);
+      const newProd = await cartsModel.addProductOnCart(id, id_prod);
+      res.status(200).send(newProd);
     } catch (e) {
       console.log(e);
       res.status(500).send({
@@ -81,6 +73,32 @@ module.exports = {
       });
     }
   },
+  deleteAll: async (req, res) => {
+    try {
+      await cartsModel.deleteAllCarts();
+      res.status(200).send({
+        message: 'Todos los carritos eliminados',
+      });
+    } catch (e) {
+      console.log(e);
+      res.status(500).send({
+        error: e.message,
+      });
+    }
+  },
+  deleteProductOnCart: async (req, res) => {
+    const { id, id_prod } = req.params;
+    try {
+      const newProd = await cartsModel.deleteProductOnCart(id, id_prod);
+      res.status(200).send(newProd);
+    } catch (e) {
+      console.log(e);
+      res.status(500).send({
+        error: e.message,
+      });
+    }
+  },
+
   /* ,
 
   put: async (req, res) => {
