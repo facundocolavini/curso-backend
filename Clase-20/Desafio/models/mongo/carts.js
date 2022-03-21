@@ -1,16 +1,24 @@
 const mongoose = require('mongoose');
-class Product {
+class Cart {
   constructor() {
     const schema = new mongoose.Schema({
-      products: [],
+      products: {
+        type: Array,
+        default: [
+          {
+            quantity: { type: Number, default: 1 },
+            id: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+          },
+        ],
+      },
       timestamp: { type: Number, format: '%Y-%m-%d', default: Date.now() },
     });
 
     // Model
-    this.model = mongoose.model('carts', schema);
+    this.model = mongoose.model('carritos', schema);
   }
 
-  async create() {
+  async createCart() {
     //Add a new cart
     const cart = await this.model.create({
       products: [],
@@ -37,24 +45,40 @@ class Product {
   }
 
   async getById(id) {
-    console.log(id);
-    const product = await this.model.findById(id);
-    console.log(product);
-    return product;
+    const cart = await this.model.findById(id);
+    return cart;
   }
 
-  async update(id, body) {
-    const product = await this.model.findByIdAndUpdate(id, body);
-    console.log('--------------------');
-    console.log('Producto actualizado');
+  async getProducts(id) {
+    const cart = await this.getById(id);
+    return cart.products;
+  }
+
+  async create(prod) {
+    const product = await this.model.create(prod);
+    console.log('----------PRODUCT CREATED----------');
+    console.log(JSON.stringify(product, null, 2));
+
     return product;
   }
 
   async delete(id) {
     await this.model.findByIdAndDelete(id);
     console.log('--------------------');
-    console.log('Producto eliminado');
+    console.log('Cart Deleted');
+  }
+
+  async update(id, body) {
+    const product = await this.model.updateOne({ _id: id }, body);
+    console.log('--------------------');
+    console.log('Cart Updated');
+    return product;
+  }
+
+  async AllProducts(id) {
+    const cart = await this.getById(id);
+    return cart.products;
   }
 }
 
-module.exports = new Product();
+module.exports = new Cart();
