@@ -10,12 +10,4 @@ router.delete('/:id', mongoCartsController.delete); // Delete a cart by id
 router.delete('/', mongoCartsController.deleteAll); // Delete all carts
 router.post('/:id/products/:id_prod', mongoCartsController.addProduct); // Add a product to a cart
 
-/* 
-router.post('/', cors(), auth(true,'carrito'), Controller.createCart);
-router.delete('/:id',cors(), auth(true,'carrito'), Controller.deleteCart);
-router.delete('/:id/productos/:id_prod',cors(), auth(true,'carrito'), Controller.deleteProductOnCart);
-router.post('/:id/productos',cors(), auth(true,'carrito'), Controller.addProductOnCart);
-router.get('/:id/productos',cors(), auth(true,'carrito'), Controller.getCartProducts);
-*/
-
 module.exports = router;
