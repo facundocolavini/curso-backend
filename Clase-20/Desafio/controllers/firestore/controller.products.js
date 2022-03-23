@@ -1,4 +1,3 @@
-const { db } = require('../../config/firebase/firebase');
 const modelProducts = require('../../models/firestore/products');
 
 module.exports = {
