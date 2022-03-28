@@ -1,8 +1,48 @@
 const socket = io();
 const formAddGame = document.getElementById('addGame');
 const containerTable = document.getElementById('products-container');
+const getProducts = async () => {
+  try {
+    const response = await fetch('http://localhost:8080/api/productos-test');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-socket.on('allgames', (games) => {
+socket.on(
+  'allGames',
+  getProducts().then((data) => {
+    containerTable.innerHTML = data
+      .map((game) => {
+        return `
+        <div class="table-responsive">
+        <table class="table table-dark">
+            <tr>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Foto</th>
+            </tr>
+            <tr>
+                <td>${game.name}</td>
+                <td>${game.price}</td>
+                <td>${game.stock}</td>
+                <td class="align-middle">
+                    <img class="img-fluid" src=${game.url} alt=${game.name}/>
+                </td>
+            </tr>
+           
+        </table>
+    </div>
+        `;
+      })
+      .join(' ');
+  })
+);
+
+/* socket.on('allgames', (games) => {
   let html;
   fetch('partials/table.hbs')
     .then((respuesta) => respuesta.text())
@@ -11,10 +51,10 @@ socket.on('allgames', (games) => {
       html = template({ games });
       containerTable.innerHTML = html;
     });
-});
+}); */
 
 socket.on('allgames', (games) => {
-  console.log(games, 'asd');
+  //Aca llamo al model para gestionarlo con mongo y hacer el insert
 });
 formAddGame.addEventListener('submit', (e) => {
   e.preventDefault();
