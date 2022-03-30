@@ -1,4 +1,5 @@
 const productModel = require('../models/products');
+const faker = require('faker');
 
 module.exports = {
   get: async (req, res) => {
@@ -39,8 +40,17 @@ module.exports = {
     }
   },
   post: async (req, res) => {
-    const { body } = req;
+    let { body } = req;
     try {
+      if (!body.name || !body.url || !body.price) {
+        const productFaker = {
+          name: faker.commerce.productName(),
+          url: faker.image.image(),
+          price: faker.commerce.price(),
+          timestamp: Date.now(),
+        };
+        body = productFaker;
+      }
       const product = await productModel.create(body);
       res.status(201).send(product);
     } catch (e) {

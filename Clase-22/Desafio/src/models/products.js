@@ -1,14 +1,11 @@
 const mongoose = require('mongoose');
-const faker = require('faker');
 
 class Product {
   constructor() {
     const schema = new mongoose.Schema({
       name: { type: String },
-      description: { type: String },
       url: { type: String },
       price: { type: Number },
-      stock: { type: Number },
       timestamp: { type: Date },
     });
 
@@ -17,18 +14,6 @@ class Product {
   }
 
   async create(obj) {
-    if (Object.keys(obj).length === 0) {
-      const productFaker = {
-        name: faker.commerce.productName(),
-        description: faker.commerce.productAdjective(),
-        url: faker.image.image(),
-        price: faker.commerce.price(),
-        stock: faker.random.number({ min: 0, max: 100 }),
-        timestamp: Date.now(),
-      };
-      obj = productFaker;
-    }
-
     const product = await this.model.create(obj);
     console.log('--------------------');
     console.log(JSON.stringify(product, null, 2));

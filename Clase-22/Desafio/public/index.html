@@ -17,12 +17,6 @@
     <title>Document</title>
 </head>
 <body>
-<!--     <nav>
-        <ul class="nav justify-content-center">
-          <a class="nav-link" href="/productos"><li class="nav-item" >Juegos</li></a>
-          <a class="nav-link"href="/"><li class="nav-item">Agregar Juego</li></a>
-        </ul>
-    </nav> -->
     <div class="container">
         <h1>Agregar un juego</h1>
         <form method="POST" id="addGame">
@@ -35,26 +29,32 @@
                 <input type="text" class="form-control" id="price" name="price" placeholder="Precio">
             </div>
             <div class="form-group">
-                <label for="price">Imagen</label>
-                <input type="text" class="form-control" id="image" name="image" placeholder="Ingrese una imagen del juego">
+                <label for="url">Imagen</label>
+                <input type="text" class="form-control" id="url" name="url" placeholder="Ingrese una imagen del juego">
             </div>
             <button type="submit" class="btn btn-primary mt-4">Agregar</button>
         </form>
         <h2>Ultimos agregados</h2>
         <div id="products-container"></div>
         <h2>Chat Grupal</h2>
-        <input type="text" class="form-control" id="email" name="email" placeholder="Ingrese su mail">
         <div id="chat-container"></div>
         <form id="formSendMsg" class="form-inline" autocomplete="off">
             <div class="form-group">
-                <input disabled id="message" type="text" class="form-control my-2 mr-2" placeholder="Ingresá un mensaje...">
+                <input type="text" class="form-control my-1 p-3" id="email" name="email" placeholder="Ingrese su mail">
+                <input type="text" class="form-control  my-1 p-2" id="firstName" name="firstName" placeholder="Ingrese su nombre">
+                <input type="text" class="form-control  my-1 p-2" id="lastName" name="lastName" placeholder="Ingrese su apellido">
+                <input type="text" class="form-control  my-1 p-2" id="age" name="age" placeholder="Ingrese su edad">
+                <input type="text" class="form-control  my-1 p-2" id="alias" name="alias" placeholder="Ingrese su alias">
+                <input type="text" class="form-control  my-1 p-2" id="avatar" name="avatar" placeholder="Ingrese su avatar">
+                <textarea disabled id="message" type="text" class="form-control  p-2 my-2 mr-2" placeholder="Mensaje..."></textarea>
                 <button disabled id="btnSend" type="submit" class="btn btn-primary my-2">Enviar!</button>
             </div>
         </form>
     </div>
-    <script src="/socket.io/socket.io.js"></script>
-<!--     <script src="js/handlebars.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/normalizr@3.6.1/dist/normalizr.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js" integrity="sha512-UNM1njAgOFUa74Z0bADwAq8gbTcqZC8Ej4xPSzpnh0l6KMevwvkBvbldF9uR++qKeJ+MOZHRjV1HZjoRvjDfNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+
     <script type="module" src="js/client.js"></script>
 </body>
 </html>

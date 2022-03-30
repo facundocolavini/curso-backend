@@ -1,4 +1,4 @@
-{{#if games.length}}
+{{#if partialItem.length}}
 <div class="table-responsive">
     <table class="table table-dark">
         <tr>
@@ -6,12 +6,12 @@
             <th>Precio</th>
             <th>Foto</th>
         </tr>
-        {{#each games}}
+        {{#each partialItem}}
         <tr>
             <td>{{this.name}}</td>
             <td>${{this.price}}</td>
             <td class="align-middle">
-                <img class="img-fluid" src={{this.image}} alt={{this.name}}/>
+                <img loading="lazy" class="img-fluid" width="200" height="400" src={{this.url}} alt={{this.name}}/>
             </td>
         </tr>
         {{/each}}
