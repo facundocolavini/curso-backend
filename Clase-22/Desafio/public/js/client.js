@@ -116,8 +116,6 @@ function toHtml(arr) {
     .join(' ');
 }
 socket.on('msgAll', (msgs) => {
-  // Use normalizr to denormalize data
-  /*   console.log(msgs); */
   const author = new normalizr.schema.Entity('authors');
   const message = new normalizr.schema.Entity('messages', {
     author: author,
