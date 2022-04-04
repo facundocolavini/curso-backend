@@ -5,7 +5,7 @@ module.exports = {
     const { orderBy, search } = req.query;
     try {
       let products = await productModel.getAll(orderBy, search);
-      res.render('products', { products });
+      res.render('main', { products });
     } catch (e) {
       console.log(e);
       res.status(500).send({

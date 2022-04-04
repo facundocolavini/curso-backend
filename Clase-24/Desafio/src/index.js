@@ -57,7 +57,7 @@
 
     app.use('/static/', express.static(path.join(__dirname, '../public')));
     app.use('/', homeRouter);
-    app.use('/products', productsRouter);
+    app.use('/api/products', productsRouter);
 
     io.on('connection', chat);
     server.listen(PORT, () =>
